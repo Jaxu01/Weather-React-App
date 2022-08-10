@@ -1,7 +1,6 @@
 import React from 'react';
 import Weatherbox from './Weatherbox.js';
 
-
 const api = {
   key: "dc862ca896c6425009a609e2e15221cb",
   base: "https://api.openweathermap.org/data/2.5/"
@@ -26,6 +25,7 @@ class App extends React.Component {
   async lookUpCity (latitude, longitude) {
     const result = await fetch(`https://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&appid=${api.key}`)
     const resultJSON = await result.json()
+    console.log(resultJSON)
 
     this.setState({query: resultJSON[0].name})
     this.lookUpWeather()
@@ -34,6 +34,7 @@ class App extends React.Component {
 
   async lookUpWeather () {
     const query = this.state.query.replace("gmina ", "")
+    console.log(query)
     const result = await fetch(`${api.base}weather?q=${query}&units=metric&APPID=${api.key}`)
     const resultJSON = await result.json()
 
@@ -41,15 +42,13 @@ class App extends React.Component {
   }
 
   search (evt) {
-    if (evt.key === "Enter") {
+    evt.preventDefault()
       this.lookUpWeather()
-    }
   }
 
-  search (evt) {
-    if (evt.key === "Enter") {
-      this.lookUpWeather()
-    }
+  handleChange = (e) => {
+    this.setState({query: e.target.value})
+    console.log(this.state.query)
   }
 
   render() {
@@ -58,14 +57,15 @@ class App extends React.Component {
       ? ((this.state.weather.main.temp > 16) ? 'app warm' : 'app') : 'app'}>
         <main>
           <div className="search-box">
-            <input 
-              type="text"
-              className="search-bar"
-              placeholder='Miasto...'
-              onChange={e => this.setState({query:e.target.value})}
-              value={this.query}
-              onKeyPress={this.search.bind(this)}
-            />
+            <form onSubmit={this.search.bind(this)}>
+              <input 
+                type="text"
+                className="search-bar"
+                placeholder='Miejscowość...'
+                onChange={this.handleChange}
+                value={this.state.query}
+              />
+            </form>
           </div>
           {(typeof this.state.weather.main != "undefined") ? (
             <Weatherbox weather={this.state.weather} />

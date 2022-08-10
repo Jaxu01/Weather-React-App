@@ -2,7 +2,6 @@ import React from 'react';
 class Weatherbox extends React.Component {
     constructor(props) {
         super(props);
-        this.weather=this.props.weather
     }
     dateBuilder (d) {
         let months = ["Styczeń", "Luty", "Marzec", "Kwiecień", "Maj", "Czerwiec", "Lipiec", "Sierpień", "Wrzesień", "Październik", "Listopad", "Grudzień"];
@@ -12,6 +11,7 @@ class Weatherbox extends React.Component {
         let date = d.getDate();
         let month = months[d.getMonth()];
         let year = d.getFullYear();
+        console.log(this.props.weather)
 
         return `${day} ${date} ${month} ${year}`
     }
@@ -19,14 +19,14 @@ class Weatherbox extends React.Component {
         return (
             <div>
                 <div className="location-box">
-                    <div className="location">{this.weather.name}, {this.weather.sys.country}</div>
+                    <div className="location">{this.props.weather.name}, {this.props.weather.sys.country}</div>
                     <div className="date">{this.dateBuilder(new Date())}</div>
                 </div>
                 <div className="weather-box">
                     <div className="temp">
-                    {Math.round(this.weather.main.temp)}°c
+                    {Math.round(this.props.weather.main.temp)}°c
                     </div>
-                    <div className="weather">{this.weather.weather[0].main}</div>
+                    <div className="weather">{this.props.weather.weather[0].main}</div>
                 </div>
             </div>
         );
