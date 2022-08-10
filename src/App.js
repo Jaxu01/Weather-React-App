@@ -24,7 +24,7 @@ class App extends React.Component {
   }
 
   async lookUpCity (latitude, longitude) {
-    const result = await fetch(`https://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&appid=${api.key}`)
+    const result = await fetch(`http://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&appid=${api.key}`)
     const resultJSON = await result.json()
 
     this.setState({query: resultJSON[0].name})
