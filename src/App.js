@@ -18,6 +18,7 @@ class App extends React.Component {
   componentDidMount() {
     navigator.geolocation.getCurrentPosition((position) => {
       const {latitude, longitude} = position.coords
+      console.log(position)
       this.lookUpCity(latitude, longitude)
     });
   }
@@ -25,20 +26,24 @@ class App extends React.Component {
   async lookUpCity (latitude, longitude) {
     const result = await fetch(`https://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&appid=${api.key}`)
     const resultJSON = await result.json()
+    console.log(resultJSON)
     
-    this.setState({query: resultJSON[0].name})
-    this.lookUpWeather()
+    this.lookUpWeather(resultJSON[0].name)
   }
   
-  async lookUpWeather () {
-    const query = this.state.query.replace("gmina ", "")
+  async lookUpWeather (query) {
+    if (!query) {
+      query = this.state.query
+    }
+    query = query.replace("gmina ", "")
+    console.log(query)
     if (query.length < 3) {
       return alert('At least two characters needed to search')
     }
     const result = await fetch(`${api.base}weather?q=${query}&units=metric&APPID=${api.key}`)
     const resultJSON = await result.json()
 
-    this.setState({query: "", weather: resultJSON})
+    this.setState({query:"", weather: resultJSON})
   }
 
   search (evt) {
