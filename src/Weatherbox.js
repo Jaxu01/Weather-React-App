@@ -23,7 +23,7 @@ class Weatherbox extends React.Component {
                 </div>
                 <div className="weather-box">
                     <div className="temp">
-                    {Math.round(this.props.weather.main.temp)}°c
+                        {Math.round(this.props.weather.main.temp)}°c
                     </div>
                     <div className="weather">{this.props.weather.weather[0].main}</div>
                 </div>
