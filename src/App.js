@@ -25,6 +25,9 @@ class App extends React.Component {
   async lookUpCity (latitude, longitude) {
     const result = await fetch(`https://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&appid=${api.key}`)
     const resultJSON = await result.json()
+    if (resultJSON[0].name?.length < 3) {
+      return alert('At least two characters needed to search')
+    }
 
     this.setState({query: resultJSON[0].name})
     this.lookUpWeather()
