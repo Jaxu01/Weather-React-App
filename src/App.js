@@ -1,5 +1,5 @@
-import React from 'react';
-import Weatherbox from './Weatherbox.js';
+import React from 'react'
+import Weatherbox from './Weatherbox.js'
 
 const api = {
   key: "dc862ca896c6425009a609e2e15221cb",
@@ -17,39 +17,33 @@ class App extends React.Component {
 
   componentDidMount() {
     navigator.geolocation.getCurrentPosition((position) => {
-      const {latitude, longitude} = position.coords;
-      this.lookUpCity(latitude, longitude);
+      const {latitude, longitude} = position.coords
+      this.lookUpCity(latitude, longitude)
     });
   }
 
   async lookUpCity (latitude, longitude) {
     const result = await fetch(`https://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&appid=${api.key}`)
     const resultJSON = await result.json()
-    console.log(resultJSON)
 
     this.setState({query: resultJSON[0].name})
     this.lookUpWeather()
-
   }
 
   async lookUpWeather () {
     const query = this.state.query.replace("gmina ", "")
-    console.log(query)
     const result = await fetch(`${api.base}weather?q=${query}&units=metric&APPID=${api.key}`)
     const resultJSON = await result.json()
 
-    this.setState({query: "", weather: resultJSON});
+    this.setState({query: "", weather: resultJSON})
   }
 
   search (evt) {
     evt.preventDefault()
-      this.lookUpWeather()
+    this.lookUpWeather()
   }
 
-  handleChange = (e) => {
-    this.setState({query: e.target.value})
-    console.log(this.state.query)
-  }
+  handleChange = (e) => this.setState({query: e.target.value})
 
   render() {
     return (
@@ -73,8 +67,8 @@ class App extends React.Component {
         </main>
         <footer>Strona stworzona przez Jakuba Piwtoraka</footer>
       </div>
-    );
+    )
   }
 }
 
-export default App;
+export default App

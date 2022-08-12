@@ -1,17 +1,16 @@
 import React from 'react';
 class Weatherbox extends React.Component {
     constructor(props) {
-        super(props);
+        super(props)
     }
     dateBuilder (d) {
-        let months = ["Styczeń", "Luty", "Marzec", "Kwiecień", "Maj", "Czerwiec", "Lipiec", "Sierpień", "Wrzesień", "Październik", "Listopad", "Grudzień"];
-        let days = ["Niedziela", "Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota"];
+        let months = ["Styczeń", "Luty", "Marzec", "Kwiecień", "Maj", "Czerwiec", "Lipiec", "Sierpień", "Wrzesień", "Październik", "Listopad", "Grudzień"]
+        let days = ["Niedziela", "Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota"]
 
-        let day = days[d.getDay()];
-        let date = d.getDate();
-        let month = months[d.getMonth()];
-        let year = d.getFullYear();
-        console.log(this.props.weather)
+        let day = days[d.getDay()]
+        let date = d.getDate()
+        let month = months[d.getMonth()]
+        let year = d.getFullYear()
 
         return `${day} ${date} ${month} ${year}`
     }
@@ -29,7 +28,7 @@ class Weatherbox extends React.Component {
                     <div className="weather">{this.props.weather.weather[0].main}</div>
                 </div>
             </div>
-        );
+        )
     }
 }
 export default Weatherbox
